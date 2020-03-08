@@ -193,8 +193,6 @@ export class CrearUsuarioComponent implements OnInit {
             ciudad.name === nombreCiudad
           );
           this.formulario.get('ciudad').setValue(ciudadFilter[0]);
-        }else{
-          this.toastr.error('Este departamento no tiene ciudades');
         }
         if (this.ciudades.length === 0) {
           this.toastr.error('Seleccione otro departamento, este no tiene ciudades');
