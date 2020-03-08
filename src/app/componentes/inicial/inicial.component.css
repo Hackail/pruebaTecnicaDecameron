@@ -1,0 +1,41 @@
+/* Structure */
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+#buscarCrear {
+  background-color: whitesmoke;
+  padding: 10px;
+  border: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 7px;
+}
+
+.cargando {
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0px;
+  left: 0px;
+  z-index: 10000;
+  text-align: center;
+  position: fixed;
+  background: rgba(0,0,0,.5);
+}
+
+.spinner-grow {
+  width: 10rem;
+  height: 10rem;
+}
+
+.btn-editar {
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  padding-top: 0.01rem;
+  padding-bottom: 0.01rem;
+}

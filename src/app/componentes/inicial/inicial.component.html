@@ -1,0 +1,76 @@
+<div class="justify-content-center">
+  <div class="d-flex justify-content-center align-items-center cargando" *ngIf="spinner">
+    <div class="spinner-grow text-warning" role="status">
+    </div>
+    <span><strong>Cargando...</strong></span>
+  </div>
+  <div>
+    <form id="buscarCrear">
+      <div class="form-group">
+        <label for="filtro" style="font-size: 22px;">Filtrar</label>
+        <input id="filtro" #filtro type="text" class="form-control" aria-describedby="ayuda"
+          (keyup)="applyFilter($event)">
+        <small id="ayuda" class="form-text text-muted">Puedes filtrar por cualquier campo y buscar por nombre o número
+          de identificación</small>
+      </div>
+      <div class="row form-group justify-content-center">
+        <button type="button" class="btn btn-outline-primary col-2"
+          style="margin-inline-end: 20px; min-width: fit-content;"
+          (click)="filtrarUsuario(filtro.value)">Buscar</button>
+        <button type="button" class="btn btn-outline-primary col-2"
+          style="margin-inline-start: 20px; min-width: fit-content;" (click)="openDialog(null)">Crear</button>
+      </div>
+    </form>
+  </div>
+  <br>
+  <div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <ng-container matColumnDef="nombres">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres </th>
+        <td mat-cell *matCellDef="let persona"> {{persona.nombres}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="apellidos">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+        <td mat-cell *matCellDef="let persona"> {{persona.apellidos}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tipoid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo identificación </th>
+        <td mat-cell *matCellDef="let persona"> {{persona.tipoid}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="identificacion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Identificación </th>
+        <td mat-cell *matCellDef="let persona"> {{persona.identificacion}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="opciones">
+        <th mat-header-cell *matHeaderCellDef> Detalles/Editar </th>
+        <td mat-cell *matCellDef="let persona"><button type="button" class="btn btn-outline-primary btn-editar"
+            (click)="openDialog(persona)">
+            <i class="fa fa-bars"></i></button></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <div class="container d-flex justify-content-center">
+    <div class="row mt-3 mb-4 align-items-center">
+      <div class="col col-xs-12 ">
+        <button type="button" class="btn btn-outline-primary" style="min-width: fit-content;"
+          (click)="obtenerUsuarios(numeroPagina-1)" [disabled]="numeroPagina === 1">Anterior</button>
+      </div>
+      <div class="col col-xs-12 text-center">
+        <span class="">Página: {{ numeroPagina }}</span>
+      </div>
+      <div class="col col-xs-12 ">
+        <button type="button" class="btn btn-outline-primary" style="min-width: fit-content;"
+          (click)="obtenerUsuarios(numeroPagina+1)" [disabled]="deshabilitarBoton">Siguiente</button>
+      </div>
+    </div>
+  </div>
+</div>

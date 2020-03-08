@@ -1,0 +1,131 @@
+<div mat-dialog-content>
+    <div class="row">
+        <h1 mat-dialog-title class="col">Crear/Editar un usuario</h1>
+        <button class="btn mt-1 mr-3" (click)="onNoClick()" style="padding: 0.1rem 0.75rem;"><i class="fa fa-close"></i>
+        </button>
+    </div>
+    <form name="form" [formGroup]="formulario" (ngSubmit)="formulario.valid && onSubmit(formulario.value);">
+        <div class="row">
+            <div class="form-group col-xs-12 col-md-6">
+                <label for="nombres">Nombres *</label>
+                <input type="text" class="form-control" formControlName="nombres" placeholder="Ingrese sus nombres"
+                    autocomplete="off"
+                    [ngClass]="{'is-invalid':formulario.get('nombres').touched && formulario.get('nombres').invalid}"
+                    required />
+                <div class="invalid-feedback">
+                    <div>El nombre es obligatorio</div>
+                </div>
+                <div class="invalid-feedback" *ngIf="this.formulario.get('nombres').hasError('pattern')">
+                    <div>El nombre solo debe contener letras</div>
+                </div>
+            </div>
+            <div class="form-group col-xs-12 col-md-6">
+                <label for="apellidos">Apellidos *</label>
+                <input type="text" class="form-control" formControlName="apellidos" placeholder="Ingrese sus apellidos"
+                    autocomplete="off"
+                    [ngClass]="{'is-invalid':formulario.get('apellidos').touched && formulario.get('apellidos').invalid}"
+                    required />
+                <div class="invalid-feedback">
+                    <div>El apellido es obligatorio</div>
+                </div>
+                <div class="invalid-feedback" *ngIf="this.formulario.get('apellidos').hasError('pattern')">
+                    <div>El apellido solo debe contener letras</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <mat-form-field class="form-group col-xs-12 col-md-6">
+                <mat-label>Tipo de identificación</mat-label>
+                <mat-select formControlName="tipoid" required>
+                    <mat-option *ngFor="let tipoid of tiposId" [value]="tipoid">
+                        {{tipoid?.nombre}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formulario.hasError('required')">Por favor seleccione un tipo de identificación
+                </mat-error>
+                <mat-hint>{{formulario.value?.sound}}</mat-hint>
+            </mat-form-field>
+            <div class="form-group col-xs-12 col-md-6">
+                <label for="identificacion">Identificación *</label>
+                <input type="text" class="form-control" formControlName="identificacion"
+                    [ngClass]="{'is-invalid':formulario.get('identificacion').touched && formulario.get('identificacion').invalid}"
+                    required />
+                <div class="invalid-feedback">
+                    <div>La identificación es obligatoria</div>
+                </div>
+                <div class="invalid-feedback" *ngIf="this.formulario.get('identificacion').hasError('pattern')">
+                    <div>La identificación es numérica</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <mat-form-field class="form-group col-xs-12 col-md-6">
+                <mat-label>Pais</mat-label>
+                <mat-select formControlName="pais" required #pais (selectionChange)="paisSeleccionado(pais.value)">
+                    <mat-option *ngFor="let pais of paises" [value]="pais">
+                        {{pais.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formulario.hasError('required')">Por favor seleccione un tipo de identificación
+                </mat-error>
+                <mat-hint>{{formulario.value?.sound}}</mat-hint>
+            </mat-form-field>
+            <mat-form-field class="form-group col-xs-12 col-md-6">
+                <mat-label>Departamento</mat-label>
+                <mat-select formControlName="estado" required #estado
+                    (selectionChange)="departamentoSeleccionado(estado.value)">
+                    <mat-option *ngFor="let estado of estados" [value]="estado">
+                        {{estado?.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formulario.hasError('required')">Por favor seleccione un departamento
+                </mat-error>
+                <mat-hint>{{formulario.value?.sound}}</mat-hint>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field class="form-group col-xs-12 col-md-6">
+                <mat-label>Ciudad</mat-label>
+                <mat-select formControlName="ciudad" required>
+                    <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad">
+                        {{ciudad?.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="formulario.hasError('required')">Por favor seleccione un tipo de identificación
+                </mat-error>
+                <mat-hint>{{formulario.value?.sound}}</mat-hint>
+            </mat-form-field>
+            <div class="form-group col-xs-12 col-md-6">
+                <label for="identificacion">Teléfono *</label>
+                <input type="text" class="form-control" formControlName="telefono" placeholder="Ingrese su telefono"
+                    autocomplete="off"
+                    [ngClass]="{'is-invalid':formulario.get('telefono').touched && formulario.get('telefono').invalid}"
+                    required />
+                <div class="invalid-feedback">
+                    <div>El teléfono es obligatorio</div>
+                </div>
+                <div class="invalid-feedback" *ngIf="this.formulario.get('telefono').hasError('pattern')">
+                    <div>El teléfono es numérico</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col">
+                <label for="correo">Correo *</label>
+                <input type="text" class="form-control" formControlName="correo" placeholder="Ingrese su correo"
+                    autocomplete="off"
+                    [ngClass]="{'is-invalid':formulario.get('correo').touched && formulario.get('correo').invalid}"
+                    required />
+                <div class="invalid-feedback">
+                    <div>El correo es obligatorio</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row justify-content-center mt-3">
+            <button class="btn btn-outline-primary col-2" style="margin-inline-end: 20px; min-width: fit-content;"
+                [disabled]="!formulario.valid" type="submit">Guardar</button>
+            <button class="btn btn-outline-primary col-2" style="margin-inline-start: 20px; min-width: fit-content;"
+                (click)="onNoClick()" type="button">Cancelar</button>
+        </div>
+    </form>
+</div>
