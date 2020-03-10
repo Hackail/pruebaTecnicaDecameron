@@ -168,11 +168,13 @@ export class CrearUsuarioComponent implements OnInit {
     this.servicios.obtenerDepartamentos(idPais).subscribe(result => {
       if (result.response.status === 1) {
         this.estados = result.response.datos;
-        let deptoFilter = this.estados.filter(depto =>
-          depto.name === nombreDepto
-        );
-        this.formulario.get('estado').setValue(deptoFilter[0]);
-        this.departamentoSeleccionado(deptoFilter[0]);
+        if (nombreDepto) {
+          let deptoFilter = this.estados.filter(depto =>
+            depto.name === nombreDepto
+          );
+          this.formulario.get('estado').setValue(deptoFilter[0]);
+          this.departamentoSeleccionado(deptoFilter[0]);
+        }
       }
     }, error => {
       this.toastr.error(error);
